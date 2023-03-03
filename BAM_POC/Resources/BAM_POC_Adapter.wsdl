@@ -1,0 +1,20 @@
+<wsdl:definitions name="BAM_POC_Adapter" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/bam/BAM_ServiceBusApplication/BAM_POC/BAM_POC_Adapter" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/bam/BAM_ServiceBusApplication/BAM_POC/BAM_POC_Adapter" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:imp1="http://xmlns.oracle.com/beam">
+  <plt:partnerLinkType name="writetoBAM_plt">
+    <plt:role name="writetoBAM_role">
+      <plt:portType name="tns:writetoBAM_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://xmlns.oracle.com/beam" schemaLocation="BAMServerConnection1_BAM_POC_Employee.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="BAM_POC_EmployeeCollection_msg">
+    <wsdl:part name="BAM_POC_EmployeeCollection" element="imp1:BAM_POC_EmployeeCollection"/>
+  </wsdl:message>
+  <wsdl:portType name="writetoBAM_ptt">
+    <wsdl:operation name="writetoBAM">
+      <wsdl:input message="tns:BAM_POC_EmployeeCollection_msg"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

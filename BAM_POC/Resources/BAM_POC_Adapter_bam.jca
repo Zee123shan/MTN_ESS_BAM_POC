@@ -1,0 +1,10 @@
+<adapter-config name="BAM_POC_Adapter" adapter="bam" wsdlLocation="BAM_POC_Adapter.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  <connection-factory UIConnectionName="BAMServerConnection1" location="eis/bam/rmi"/>
+  <endpoint-interaction portType="writetoBAM_ptt" operation="writetoBAM">
+    <interaction-spec className="oracle.bam.adapter.adc.ADCInteractionSpec">
+      <property name="OperationType" value="Insert"/>
+      <property name="InBatch" value="false"/>
+      <property name="DataObjectName" value="/BAM_POC_Employee"/>
+    </interaction-spec>
+  </endpoint-interaction>
+</adapter-config>

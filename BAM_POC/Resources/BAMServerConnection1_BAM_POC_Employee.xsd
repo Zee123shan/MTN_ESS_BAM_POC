@@ -1,0 +1,95 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlns.oracle.com/beam"
+        attributeFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/beam" elementFormDefault="qualified"
+        xmlns="http://www.w3.org/2001/XMLSchema">
+  <annotation>
+    <documentation>               <info>BAM_POC_Employee</info>            </documentation>
+  </annotation>
+  <element name="BAM_POC_EmployeeCollection">
+    <complexType>
+      <sequence>
+        <element name="BAM_POC_Employee" type="tns:BAM_POC_Employee" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="Response">
+    <complexType>
+      <sequence>
+        <element name="result" type="xsd:string"/>
+      </sequence>
+    </complexType>
+  </element>
+  <complexType name="BAM_POC_Employee">
+    <sequence>
+      <element name="BEAM_ID" minOccurs="1" type="xsd:integer">
+        <annotation>
+          <appinfo>
+            <columnName xmlns="http://xmlns.oracle.com/beam">BEAM_ID</columnName>
+            <columnType xmlns="http://xmlns.oracle.com/beam">INT</columnType>
+            <columnDescription xmlns="http://xmlns.oracle.com/beam"/>
+          </appinfo>
+        </annotation>
+      </element>
+      <element name="DATAOBJECT_CREATED" minOccurs="1" type="xsd:dateTime">
+        <annotation>
+          <appinfo>
+            <columnName xmlns="http://xmlns.oracle.com/beam">DATAOBJECT_CREATED</columnName>
+            <columnType xmlns="http://xmlns.oracle.com/beam">DATETIME</columnType>
+            <columnDescription xmlns="http://xmlns.oracle.com/beam"/>
+          </appinfo>
+        </annotation>
+      </element>
+      <element name="DATAOBJECT_MODIFIED" minOccurs="1" type="xsd:dateTime">
+        <annotation>
+          <appinfo>
+            <columnName xmlns="http://xmlns.oracle.com/beam">DATAOBJECT_MODIFIED</columnName>
+            <columnType xmlns="http://xmlns.oracle.com/beam">DATETIME</columnType>
+            <columnDescription xmlns="http://xmlns.oracle.com/beam"/>
+          </appinfo>
+        </annotation>
+      </element>
+      <element name="EMP_ID" minOccurs="0">
+        <annotation>
+          <appinfo>
+            <columnName xmlns="http://xmlns.oracle.com/beam">EMP_ID</columnName>
+            <columnType xmlns="http://xmlns.oracle.com/beam">VARCHAR</columnType>
+            <columnDescription xmlns="http://xmlns.oracle.com/beam"/>
+          </appinfo>
+        </annotation>
+        <simpleType>
+          <restriction base="xsd:string">
+            <maxLength value="100"/>
+          </restriction>
+        </simpleType>
+      </element>
+      <element name="EMP_NAME" minOccurs="0">
+        <annotation>
+          <appinfo>
+            <columnName xmlns="http://xmlns.oracle.com/beam">EMP_NAME</columnName>
+            <columnType xmlns="http://xmlns.oracle.com/beam">VARCHAR</columnType>
+            <columnDescription xmlns="http://xmlns.oracle.com/beam"/>
+          </appinfo>
+        </annotation>
+        <simpleType>
+          <restriction base="xsd:string">
+            <maxLength value="100"/>
+          </restriction>
+        </simpleType>
+      </element>
+      <element name="EMP_DESG" minOccurs="0">
+        <annotation>
+          <appinfo>
+            <columnName xmlns="http://xmlns.oracle.com/beam">EMP_DESG</columnName>
+            <columnType xmlns="http://xmlns.oracle.com/beam">VARCHAR</columnType>
+            <columnDescription xmlns="http://xmlns.oracle.com/beam"/>
+          </appinfo>
+        </annotation>
+        <simpleType>
+          <restriction base="xsd:string">
+            <maxLength value="100"/>
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+</schema>

@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/bam/BAM_ServiceBusApplication/BAM_POC/BAM_POC_Adapter" name="BAM_POC_Adapter-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:import location="BAM_POC_Adapter.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/bam/BAM_ServiceBusApplication/BAM_POC/BAM_POC_Adapter"/>
+  <wsdl:binding name="writetoBAM_ptt-binding" type="bam:writetoBAM_ptt" xmlns:bam="http://xmlns.oracle.com/pcbpel/adapter/bam/BAM_ServiceBusApplication/BAM_POC/BAM_POC_Adapter">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <wsdl:operation name="writetoBAM">
+      <soap:operation soapAction="writetoBAM"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>

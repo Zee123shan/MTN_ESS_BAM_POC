@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="BAM_POC/Resources/BAM_POC_Adapter-concrete"/>
+            <con:binding>
+                <con:name>writetoBAM_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/pcbpel/adapter/bam/BAM_ServiceBusApplication/BAM_POC/BAM_POC_Adapter</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:tracingEnabled>true</oper:tracingEnabled>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N53efa2b3.N3635eaaa.0.1748c426ab9.N7e0c">
+            <con:stage name="Reporting" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+                <con:context>
+                    <con1:varNsDecl namespace="http://mtn.com/data/MTNN_GetRechargeDAEventDetails" prefix="mtnn" xmlns:con5="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl namespace="http://mtn.com/data/common" prefix="com" xmlns:con5="http://www.bea.com/wli/sb/stages/config"/>
+                    <con5:varNsDecl prefix="beam" namespace="http://xmlns.oracle.com/beam" xmlns:con5="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="Reporting" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a01c406.53a3c961.2.1748d03f690.N8000</con1:id>
+                        <con2:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Reporting>
+	<ServiceName>BAM_POC</ServiceName>
+	<EmployeeId>{data($body/beam:BAM_POC_EmployeeCollection/beam:BAM_POC_Employee/beam:EMP_ID)}</EmployeeId>
+</Reporting>]]></con:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="R" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a01c406.53a3c961.2.1748d03f690.N7fff</con1:id>
+                        <con2:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Reporting>
+	<TimeStamp>{data(fn-bea:dateTime-to-string-with-format("yyyy-MM-dd'T'hh:mm:ss.SSS",fn:current-dateTime()))}</TimeStamp>
+	<Status>REQUEST_OSB</Status>	
+</Reporting>]]></con:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con4:report xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con1:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-a01c406.53a3c961.2.1748d03f690.N7ffe</con1:id>
+                        <con4:expr>
+                            <con1:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">$body</con1:xqueryText>
+                        </con4:expr>
+                        <con4:labels>
+                            <con4:key>ServiceName</con4:key>
+                            <con4:varName>Reporting</con4:varName>
+                            <con4:value>
+                                <con1:xpathText xmlns:con5="http://www.bea.com/wli/sb/stages/config">./ServiceName</con1:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                        <con4:labels>
+                            <con4:key>EmployeeId</con4:key>
+                            <con4:varName>Reporting</con4:varName>
+                            <con4:value>
+                                <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./EmployeeId</con:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                        <con4:labels>
+                            <con4:key>TimeStamp</con4:key>
+                            <con4:varName>R</con4:varName>
+                            <con4:value>
+                                <con1:xpathText xmlns:con5="http://www.bea.com/wli/sb/stages/config">./TimeStamp</con1:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                        <con4:labels>
+                            <con4:key>Status</con4:key>
+                            <con4:varName>R</con4:varName>
+                            <con4:value>
+                                <con1:xpathText xmlns:con5="http://www.bea.com/wli/sb/stages/config">./Status</con1:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                    </con4:report>
+                    <con2:assign varName="RequestXML" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a01c406.53a3c961.2.1748d03f690.N7ffd</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$body/*</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N53efa2b3.N3635eaaa.0.1748c426ab9.N7e0b">
+            <con:stage name="Reporting" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+                <con:context>
+                    <con1:varNsDecl namespace="http://mtn.com/data/MTNN_GetRechargeDAEventDetails" prefix="mtnn" xmlns:con5="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl namespace="http://mtn.com/data/common" prefix="com" xmlns:con5="http://www.bea.com/wli/sb/stages/config"/>
+                    <con5:varNsDecl prefix="beam" namespace="http://xmlns.oracle.com/beam" xmlns:con5="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="Reporting" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a01c406.53a3c961.3.1748d0a86e0.N8000</con1:id>
+                        <con2:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Reporting>
+	<ServiceName>BAM_POC</ServiceName>
+	<EmployeeId>{data($body/beam:BAM_POC_EmployeeCollection/beam:BAM_POC_Employee/beam:EMP_ID)}</EmployeeId>
+</Reporting>]]></con:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="R" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a01c406.53a3c961.3.1748d0a86e0.N7fff</con1:id>
+                        <con2:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Reporting>
+	<TimeStamp>{data(fn-bea:dateTime-to-string-with-format("yyyy-MM-dd'T'hh:mm:ss.SSS",fn:current-dateTime()))}</TimeStamp>
+	<Status>RESPONSE_OSB</Status>	
+</Reporting>]]></con:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con4:report xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con1:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-a01c406.53a3c961.3.1748d0a86e0.N7ffe</con1:id>
+                        <con4:expr>
+                            <con1:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">$body</con1:xqueryText>
+                        </con4:expr>
+                        <con4:labels>
+                            <con4:key>ServiceName</con4:key>
+                            <con4:varName>Reporting</con4:varName>
+                            <con4:value>
+                                <con1:xpathText xmlns:con5="http://www.bea.com/wli/sb/stages/config">./ServiceName</con1:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                        <con4:labels>
+                            <con4:key>EmployeeId</con4:key>
+                            <con4:varName>Reporting</con4:varName>
+                            <con4:value>
+                                <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./EmployeeId</con:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                        <con4:labels>
+                            <con4:key>TimeStamp</con4:key>
+                            <con4:varName>R</con4:varName>
+                            <con4:value>
+                                <con1:xpathText xmlns:con5="http://www.bea.com/wli/sb/stages/config">./TimeStamp</con1:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                        <con4:labels>
+                            <con4:key>Status</con4:key>
+                            <con4:varName>R</con4:varName>
+                            <con4:value>
+                                <con1:xpathText xmlns:con5="http://www.bea.com/wli/sb/stages/config">./Status</con1:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                    </con4:report>
+                    <con2:assign varName="ResponseXML" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a01c406.53a3c961.3.1748d0a86e0.N7ffd</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$body/*</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="_onErrorHandler-a01c406.53a3c961.2.1748d03f690.N7ffc" type="error"/>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N53efa2b3.N3635eaaa.0.1748c426ab9.N7e0c</con:request>
+                <con:response>response-N53efa2b3.N3635eaaa.0.1748c426ab9.N7e0b</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" error-handler="_onErrorHandler-a01c406.53a3c961.2.1748d03f690.N7ffc">
+                <con:context>
+                    <con2:userNsDecl prefix="beam" namespace="http://xmlns.oracle.com/beam"/>
+                </con:context>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-N53efa2b3.N3635eaaa.0.1748c426ab9.N7f08</con2:id>
+                        <con4:service ref="BAM_POC/BAM_POC_Adapter" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:operation>writetoBAM</con4:operation>
+                        <con4:outboundTransform>
+                            <con1:report>
+                                <con2:id>_ActionId-N53efa2b3.N3635eaaa.0.1748c426ab9.N7ea2</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>$body</con2:xqueryText>
+                                </con1:expr>
+                                <con1:labels>
+                                    <con1:key>Request_to_BAM</con1:key>
+                                    <con1:varName>body</con1:varName>
+                                    <con1:value>
+                                        <con2:xpathText>.</con2:xpathText>
+                                    </con1:value>
+                                </con1:labels>
+                            </con1:report>
+                        </con4:outboundTransform>
+                        <con4:responseTransform>
+                            <con1:report>
+                                <con2:id>_ActionId-N53efa2b3.N3635eaaa.0.1748c426ab9.N7e6f</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>$body</con2:xqueryText>
+                                </con1:expr>
+                                <con1:labels>
+                                    <con1:key>Response_from_BAM</con1:key>
+                                    <con1:varName>body</con1:varName>
+                                    <con1:value>
+                                        <con2:xpathText>.</con2:xpathText>
+                                    </con1:value>
+                                </con1:labels>
+                            </con1:report>
+                        </con4:responseTransform>
+                    </con4:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
